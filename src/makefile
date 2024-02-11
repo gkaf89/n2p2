@@ -186,7 +186,7 @@ EXE=$(APP)
 DLIB=libnnp.so libnnpif.so libnnptrain.so
 SLIB=$(DLIB:.so=.a)
 PYLIB=$(wildcard $(PROJECT_LIB)/pynnp*.so)
-install:
+install: $(INSTALL_BIN) $(INSTALL_LIB)
 	$(foreach exe, $(EXE), ln -s $(CURDIR)/$(PROJECT_BIN)/$(exe) $(INSTALL_BIN)/$(exe);)
 	$(foreach dlib, $(DLIB), ln -s $(CURDIR)/$(PROJECT_LIB)/$(dlib) $(INSTALL_LIB)/$(dlib);)
 	$(foreach slib, $(SLIB), ln -s $(CURDIR)/$(PROJECT_LIB)/$(slib) $(INSTALL_LIB)/$(slib);)
@@ -197,3 +197,9 @@ uninstall:
 	$(foreach dlib, $(DLIB), rm $(INSTALL_LIB)/$(dlib);)
 	$(foreach slib, $(SLIB), rm $(INSTALL_LIB)/$(slib);)
 	$(foreach pylib, $(notdir $(PYLIB)), rm $(INSTALL_LIB)/$(pylib);)
+
+$(INSTALL_BIN):
+	mkdir -p "$(INSTALL_BIN)"
+
+$(INSTALL_LIB):
+	mkdir -p "$(INSTALL_LIB)"
